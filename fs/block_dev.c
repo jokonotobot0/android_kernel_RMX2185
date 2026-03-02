@@ -1472,9 +1472,8 @@ static int __blkdev_get(struct block_device *bdev, fmode_t mode, int for_part)
 	 */
 	if (!for_part) {
 		ret = devcgroup_inode_permission(bdev->bd_inode, perm);
-		if (ret != 0) {
+		if (ret != 0)
 			return ret;
-		}
 	}
 
  restart:
@@ -1543,7 +1542,8 @@ static int __blkdev_get(struct block_device *bdev, fmode_t mode, int for_part)
 				goto out_clear;
 			BUG_ON(for_part);
 			ret = __blkdev_get(whole, mode, 1);
-			if (ret){
+
+			if (ret) {
 				bdput(whole);
 				goto out_clear;
 			}
@@ -1680,6 +1680,9 @@ int blkdev_get(struct block_device *bdev, fmode_t mode, void *holder)
 		mutex_unlock(&bdev->bd_mutex);
 		bdput(whole);
 	}
+	if (res)
+		bdput(bdev);
+
 	if (res)
 		bdput(bdev);
 
