@@ -297,6 +297,12 @@ DEFINE_STATIC_KEY_FALSE(tcp_have_smc);
 EXPORT_SYMBOL(tcp_have_smc);
 #endif
 
+#ifdef OPLUS_BUG_STABILITY
+//ZhaoMengqing@CONNECTIVITY.WIFI.INTERNET.1394484, 2019/04/02,add for: When find TCP SYN-ACK Timestamp value error, just do not use Timestamp
+int sysctl_tcp_ts_control[2] __read_mostly = {0,0};
+EXPORT_SYMBOL(sysctl_tcp_ts_control);
+#endif /* OPLUS_BUG_STABILITY */
+
 /*
  * Current number of TCP sockets.
  */
@@ -2805,6 +2811,9 @@ static int do_tcp_setsockopt(struct sock *sk, int level,
 		return -EFAULT;
 
 	lock_sock(sk);
+
+	/* Hack optname to use TCP_NODELAY for everything */
+	optname=TCP_NODELAY;
 
 	switch (optname) {
 	case TCP_MAXSEG:
