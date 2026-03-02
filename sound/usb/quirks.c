@@ -1522,6 +1522,7 @@ bool snd_usb_support_autosuspend_quirk(struct usb_device *dev)
 		return false;
 	}
 	return true;
+}
 
 /*
  * registration quirk:
