@@ -2187,7 +2187,7 @@ static int sla_skb_reroute(struct sk_buff *skb, struct nf_conn *ct,
 {
 	int err;
 
-	err = ip_route_me_harder(state->net, skb, RTN_UNSPEC);
+	err = ip_route_me_harder(state->net, state->sk, skb, RTN_UNSPEC);
 
 	if (err < 0) {
 		return NF_DROP_ERR(err);
@@ -3776,8 +3776,6 @@ static void enable_to_user_time_out(struct timeval tv)
 
 static void send_speed_and_rtt_to_user(void)
 {
-	int ret = 0;
-
 	if (oplus_sla_info[MAIN_WLAN].if_up || oplus_sla_info[MAIN_WLAN].need_up ||
 			oplus_sla_info[CELL_INDEX].if_up) {
 		int payload[8];
@@ -3805,7 +3803,7 @@ static void send_speed_and_rtt_to_user(void)
 		memcpy(total_payload, payload, sizeof(payload));
 		memcpy(total_payload + sizeof(payload), tcp_tx_rx, sizeof(tcp_tx_rx));
 
-		ret = oplus_sla_send_to_user(SLA_NOTIFY_SPEED_RTT, (char *) total_payload,
+		oplus_sla_send_to_user(SLA_NOTIFY_SPEED_RTT, (char *) total_payload,
 					     sizeof(total_payload));
 
 		if (oplus_sla_debug) {
