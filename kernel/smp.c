@@ -108,7 +108,7 @@ static __always_inline void csd_lock_wait(struct __call_single_data *csd)
 	smp_cond_load_acquire(&csd->flags, !(VAL & CSD_FLAG_LOCK));
 }
 
-static __always_inline void csd_lock(struct __call_single_data *cysd)
+static __always_inline void csd_lock(struct __call_single_data *csd)
 {
 	csd_lock_wait(cysd);
 	cysd->flags |= CSD_FLAG_LOCK;
