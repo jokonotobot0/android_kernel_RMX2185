@@ -3382,6 +3382,7 @@ static void sd_probe_async(void *data, async_cookie_t cookie)
 			sdp->host->hostt->rpm_autosuspend_delay);
 	}
 	device_add_disk(dev, gd);
+
 	if (sdkp->capacity)
 		sd_dif_config_host(sdkp);
 
