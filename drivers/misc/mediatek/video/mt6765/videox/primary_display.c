@@ -10438,6 +10438,7 @@ void oppo_delayed_trigger_kick_set(int params)
 enum DISP_POWER_STATE oppo_primary_set_state(enum DISP_POWER_STATE new_state)
 {
 	primary_set_state(new_state);
+        return false;
 }
 
 void oppo_cmdq_reset_config_handle(void)

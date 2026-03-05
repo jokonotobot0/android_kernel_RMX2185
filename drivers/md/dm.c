@@ -949,7 +949,7 @@ void disable_write_zeroes(struct mapped_device *md)
 
 static bool swap_bios_limit(struct dm_target *ti, struct bio *bio)
 {
-	return unlikely((bio->bi_opf & REQ_SWAP) != 0) && unlikely(ti->limit_swap_bios);
+	return 0;
 }
 
 static void clone_endio(struct bio *bio)
