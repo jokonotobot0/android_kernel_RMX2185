@@ -110,8 +110,8 @@ static __always_inline void csd_lock_wait(struct __call_single_data *csd)
 
 static __always_inline void csd_lock(struct __call_single_data *csd)
 {
-	csd_lock_wait(cysd);
-	cysd->flags |= CSD_FLAG_LOCK;
+	csd_lock_wait(csd);
+	csd->flags |= CSD_FLAG_LOCK;
 
 	/*
 	 * prevent CPU from reordering the above assignment
